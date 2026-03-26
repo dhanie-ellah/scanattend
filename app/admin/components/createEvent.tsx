@@ -56,7 +56,7 @@ export default function CreateEvent({}) {
                     </label>
                     <div className="relative">
                       <input
-                        className="w-full bg-(--surface-container) border-none rounded-xl px-4 py-3.5 text-sm focus:ring-2 focus:ring-(--primary)/20 focus:bg-(--surface-container-lowest) transition-all"
+                        className="w-full bg-(--surface-container) border-none rounded-xl px-4 py-3.5 text-sm text-black focus:ring-2 focus:ring-(--primary)/20 focus:bg-(--surface-container-lowest) transition-all"
                         type="date"
                       />
                     </div>
@@ -67,7 +67,7 @@ export default function CreateEvent({}) {
                     </label>
                     <div className="relative">
                       <input
-                        className="w-full bg-(--surface-container) border-none rounded-xl px-4 py-3.5 text-sm focus:ring-2 focus:ring-(--primary)/20 focus:bg-(--surface-container-lowest) transition-all"
+                        className="w-full bg-(--surface-container) border-none rounded-xl px-4 py-3.5 text-sm text-black focus:ring-2 focus:ring-(--primary)/20 focus:bg-(--surface-container-lowest) transition-all"
                         type="time"
                       />
                     </div>

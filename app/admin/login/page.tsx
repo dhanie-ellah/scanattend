@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -17,24 +17,38 @@ import { ShieldCheck } from "lucide-react";
 export default function AdminLogin() {
   // const [email, setEmail] = useState("");
   // const [password, setPassword] = useState("");
-  // const [loading, setLoading] = useState(false);
-  // const [error, setError] = useState("");
-  // const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [visible, setVisible] = useState(false);
+  const router = useRouter();
 
-  // const handleSubmit = async (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   setLoading(true);
-  //   setError("");
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
 
-    // Demo login: email "admin@scanattend.com" / password "admin"
-  //   if (email === "admin@scanattend.com" && password === "admin") {
-  //     document.cookie = "admin-token=valid; path=/; max-age=86400";
-  //     router.push("/admin/dashboard");
-  //   } else {
-  //     setError("Invalid credentials");
-  //   }
-  //   setLoading(false);
-  // };
+    const formData = new FormData(e.currentTarget);
+
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+
+    const res = await fetch("/api/admin/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    });
+
+    if (res.ok) {
+      router.push("/admin/dashboard");
+    } else {
+      const data = await res.json();
+      setError(data.error || "Login failed");
+    }
+
+    setLoading(false);
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-slate-50 to-slate-100 p-4 bg-background font-body text-on-surface flex-col kinetic-bg">
@@ -118,7 +132,7 @@ export default function AdminLogin() {
                   Secure access to your organization dashboard.
                 </p>
               </div>
-              <form className="space-y-6">
+              <form className="space-y-6" onSubmit={handleSubmit}>
                 {/* <!-- Email Field --> */}
                 <div className="space-y-2">
                   <label
@@ -177,7 +191,7 @@ export default function AdminLogin() {
                       name="password"
                       placeholder="••••••••"
                       required
-                      type="password"
+                      type={visible ? "text" : "password"}
                     />
                     <button
                       className="absolute inset-y-0 right-0 pr-4 flex items-center text-(--outline) hover:text-(--on-surface) transition-colors"
@@ -186,8 +200,9 @@ export default function AdminLogin() {
                       <span
                         className="material-symbols-outlined text-lg"
                         data-icon="visibility"
+                        onClick={() => setVisible(!visible)}
                       >
-                        visibility
+                        {visible ? "visibility_off" : "visibility"}
                       </span>
                     </button>
                   </div>

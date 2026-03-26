@@ -86,7 +86,7 @@ export default function EventsPage() {
           </div>
         </Card>
         {/* <!-- Events Table Content --> */}
-        <Table className="bg-(--surface-container-low) rounded-xl overflow-hidden border-(--outline-variant)/5">
+        <div className="bg-(--surface-container-low) rounded-xl overflow-hidden border-(--outline-variant)/5">
           <div className="px-8 py-6 border-b border-(--outline-variant)/10 flex items-center justify-between">
             <h4 className="font-headline font-bold text-lg">Active Events</h4>
             <div className="flex gap-2">
@@ -269,7 +269,7 @@ export default function EventsPage() {
               </button>
             </div>
           </div>
-        </Table>
+        </div>
       </main>
 
       <Modal />

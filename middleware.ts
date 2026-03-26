@@ -1,21 +1,21 @@
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
+import { NextResponse } from "next/server"
+import type { NextRequest } from "next/server"
 
 export function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl;
+  const token = request.cookies.get("admin-token")
 
-  // Protect admin routes (stub - replace with real auth like Clerk)
-  // if (pathname.startsWith('/admin') && pathname !== '/admin/login') {
-  //   const token = request.cookies.get('admin-token')?.value;
-  //   if (!token) {
-  //     return NextResponse.redirect(new URL('/admin/login', request.url));
-  //   }
-  // }
+  if (
+    !token &&
+    request.nextUrl.pathname.startsWith("/admin/dashboard")
+  ) {
+    return NextResponse.redirect(
+      new URL("/admin/login", request.url)
+    )
+  }
 
-  // return NextResponse.next();
+  return NextResponse.next()
 }
 
-// export const config = {
-//   matcher: ['/admin/:path*'],
-// };
-
+export const config = {
+  matcher: ["/admin/dashboard/:path*"],
+}
